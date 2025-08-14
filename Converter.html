@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Seedr Link Converter</title>
+  <style>
+body {
+  font-family: 'Courier New', monospace;
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #0d0d0d;
+  color: #00ff66;
+  border: 1px solid #00ff66;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 255, 102, 0.5);
+}
+
+h2 {
+  color: #00ff66;
+  text-align: center;
+}
+
+input, button {
+  padding: 10px;
+  font-size: 16px;
+  font-family: 'Courier New', monospace;
+  border: 1px solid #00ff66;
+  background-color: #1a1a1a;
+  color: #00ff66;
+  outline: none;
+}
+
+input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#output {
+  margin-top: 10px;
+  padding: 10px;
+  background: #1a1a1a;
+  border-radius: 5px;
+  border: 1px solid #00ff66;
+  word-break: break-all;
+}
+
+button {
+  cursor: pointer;
+  margin-right: 5px;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background-color: #00ff66;
+  color: #0d0d0d;
+}
+  </style>
+</head>
+<body>
+  <h2>Seedr Link Converter</h2>
+  <input type="text" id="inputUrl" placeholder="Enter Seedr download link here">
+  <button onclick="convertLink()">Convert</button>
+  <button onclick="copyLink()">Copy</button>
+  <button onclick="openLink()">Open Link</button>
+
+  <div id="output"></div>
+
+  <script>
+    function convertLink() {
+      const input = document.getElementById("inputUrl").value.trim();
+      if (!input) {
+        alert("Please enter a Seedr link");
+        return;
+      }
+
+      try {
+        const url = new URL(input);
+        const hostParts = url.hostname.split(".");
+        const subdomain = hostParts[0]; // e.g., rd5, nw29
+        const path = url.pathname + url.search;
+        const workerUrl = `https://hack1-irupc.irupc.workers.dev/${subdomain}${path}`;
+        document.getElementById("output").textContent = workerUrl;
+      } catch {
+        alert("Invalid URL format");
+      }
+    }
+
+    function copyLink() {
+      const outputText = document.getElementById("output").textContent;
+      if (!outputText) {
+        alert("No link to copy");
+        return;
+      }
+      navigator.clipboard.writeText(outputText).then(() => {
+        alert("Copied to clipboard!");
+      });
+    }
+
+    function openLink() {
+      const outputText = document.getElementById("output").textContent;
+      if (!outputText) {
+        alert("No link to open");
+        return;
+      }
+      window.open(outputText, "_blank");
+    }
+  </script>
+</body>
+</html>
