@@ -79,7 +79,7 @@ button:hover {
         const hostParts = url.hostname.split(".");
         const subdomain = hostParts[0]; // e.g., rd5, nw29
         const path = url.pathname + url.search;
-        const workerUrl = `https://hack1-irupc.irupc.workers.dev/${subdomain}${path}`;
+        const workerUrl = `https://##servername.worker.dev/${subdomain}${path}`;
         document.getElementById("output").textContent = workerUrl;
       } catch {
         alert("Invalid URL format");
